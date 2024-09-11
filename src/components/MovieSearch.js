@@ -42,21 +42,23 @@ const MovieSearch = () => {
   return (
     <div className="movie-search">
       <h1>Search Movies</h1>
+      <form onSubmit={fetchMovies}>
       <input
         type="text"
         placeholder="Search for a movie..."
         onChange={(e) => setQuery(e.target.value)}
       />
       <button onClick={fetchMovies}>Search</button>
+      </form>
       {error && <p className="error">{error}</p>}
-      <div className="movie-list">
+      <ul className="movie-list">
       {movies.map((movie) => (
-        <div className="movie-item" key={movie.imdbID}>
+        <li className="movie-item" key={movie.imdbID}>
           <h2>{movie.Title}({movie.Year})</h2>
           {movie.Poster !== 'N/A' && <img src={movie.Poster} alt={movie.Title} />}
-        </div>
+        </li>
       ))}
-      </div>
+      </ul>
     </div>
   );
 }

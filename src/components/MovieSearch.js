@@ -47,6 +47,7 @@ const MovieSearch = () => {
         type="text"
         placeholder="Search for a movie..."
         onChange={(e) => setQuery(e.target.value)}
+        className='error'
       />
       <button onClick={fetchMovies}>Search</button>
       </form>

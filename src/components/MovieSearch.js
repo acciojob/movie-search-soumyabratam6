@@ -6,6 +6,7 @@ const MovieSearch = () => {
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (query.trim()) {
@@ -14,6 +15,7 @@ const MovieSearch = () => {
   }, [query]);
 
   const fetchMovies = async () => {
+    setIsLoading(true);
     if (query.trim() === '') {
       setError('Invalid movie name. Please try again.');
       setMovies([]);
@@ -37,29 +39,36 @@ const MovieSearch = () => {
       setError('An error occurred while fetching data. Please try again.');
       setMovies([]);
     }
+    setIsLoading(false)
   }
 
   return (
     <div className="movie-search">
       <h1>Search Movies</h1>
       <form onSubmit={(e) => { e.preventDefault(); fetchMovies(); }}>
-      <input
-        type="text"
-        placeholder="Search for a movie..."
-        onChange={(e) => setQuery(e.target.value)}
-        className='error'
-      />
-      <button onClick={fetchMovies}>Search</button>
+        <input
+          type="text"
+          placeholder="Search for a movie..."
+          onChange={(e) => setQuery(e.target.value)}
+          className='error'
+        />
+        <button type="submit">Search</button>
       </form>
-      {error && <p className="error">{error}</p>}
-      <ul className="movie-list">
-      {movies.map((movie) => (
-        <li  key={movie.imdbID}>
-          <h2>{movie.Title}({movie.Year})</h2>
-          {movie.Poster !== 'N/A' && <img src={movie.Poster} alt={movie.Title} />}
-        </li>
-      ))}
-      </ul>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          {error && <p className="error">{error}</p>}
+          <ul className="movie-list">
+            {movies.map((movie) => (
+              <li className="movie-item" key={movie.imdbID}>
+                <h2>{movie.Title}({movie.Year})</h2>
+                {movie.Poster !== 'N/A' && <img src={movie.Poster} alt={movie.Title} />}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 }

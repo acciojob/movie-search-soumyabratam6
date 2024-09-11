@@ -54,7 +54,7 @@ const MovieSearch = () => {
       {error && <p className="error">{error}</p>}
       <ul className="movie-list">
       {movies.map((movie) => (
-        <li className="movie-item" key={movie.imdbID}>
+        <li  key={movie.imdbID}>
           <h2>{movie.Title}({movie.Year})</h2>
           {movie.Poster !== 'N/A' && <img src={movie.Poster} alt={movie.Title} />}
         </li>

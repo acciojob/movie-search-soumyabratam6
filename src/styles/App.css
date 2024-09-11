@@ -1,1 +1,36 @@
-
+*{
+    margin: 0;
+    padding: 0;
+}
+.movie-search {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .movie-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+  }
+  
+  .movie-item img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .error {
+    color: red;
+    font-weight: bold;
+  }
+  

@@ -1,0 +1,64 @@
+import axios from 'axios';
+import React, { useState,useEffect } from 'react';
+import 'regenerator-runtime/runtime';
+import './../styles/App.css'
+const MovieSearch = () => {
+  const [query, setQuery] = useState('');
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (query.trim()) {
+      fetchMovies();  // Fetch movies whenever the query changes
+    }
+  }, [query]);
+
+  const fetchMovies = async () => {
+    if (query.trim() === '') {
+      setError('Please enter a movie name.');
+      setMovies([]);
+      return;
+    }
+
+    const apiKey = '99eb9fd1';
+    const url = `https://www.omdbapi.com/?apikey=${apiKey}&s=${query}`;  ///http://www.omdbapi.com/?i=tt3896198&apikey=442aaba7
+
+    try {
+      const response = await axios.get(url);
+      console.log(response);
+      if (response.data.Response === 'True') {
+        setMovies(response.data.Search); // Use response.data.Search directly
+        setError('');
+      } else {
+        setError('Invalid movie name. Please try again.');
+        setMovies([]);
+      }
+    } catch (error) {
+      setError('An error occurred while fetching data. Please try again.');
+      setMovies([]);
+    }
+  }
+
+  return (
+    <div className="movie-search">
+      <h1>Search Movies</h1>
+      <input
+        type="text"
+        placeholder="Search for a movie..."
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <button onClick={fetchMovies}>Search</button>
+      {error && <p className="error">{error}</p>}
+      <div className="movie-list">
+      {movies.map((movie) => (
+        <div className="movie-item" key={movie.imdbID}>
+          <h2>{movie.Title}({movie.Year})</h2>
+          {movie.Poster !== 'N/A' && <img src={movie.Poster} alt={movie.Title} />}
+        </div>
+      ))}
+      </div>
+    </div>
+  );
+}
+
+export default MovieSearch;

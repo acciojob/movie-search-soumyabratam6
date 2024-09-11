@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState,useEffect } from 'react';
 import 'regenerator-runtime/runtime';
-import './../styles/App.css'
+
 const MovieSearch = () => {
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
@@ -42,7 +42,7 @@ const MovieSearch = () => {
   return (
     <div className="movie-search">
       <h1>Search Movies</h1>
-      <form onSubmit={fetchMovies}>
+      <form onSubmit={(e) => { e.preventDefault(); fetchMovies(); }}>
       <input
         type="text"
         placeholder="Search for a movie..."

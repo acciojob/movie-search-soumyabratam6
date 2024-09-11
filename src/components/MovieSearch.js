@@ -15,7 +15,7 @@ const MovieSearch = () => {
 
   const fetchMovies = async () => {
     if (query.trim() === '') {
-      setError('Please enter a movie name.');
+      setError('Invalid movie name. Please try again.');
       setMovies([]);
       return;
     }
